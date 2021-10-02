@@ -9,6 +9,7 @@ class Player(pygame.sprite.Sprite):
         self.health = 100
         self.max_health = 100
         self.speed = 2
+        self.all_projectiles = pygame.sprite.Group()
         self.image = pygame.image.load('images/Babale.png')
         self.rect = self.image.get_rect()
         self.rect.x = 0
@@ -18,7 +19,7 @@ class Player(pygame.sprite.Sprite):
 
     def launch_projectile(self):
         # Créer une nouvelle instance de la classe projectile
-        self.all_projectiles.add(Projectile())
+        self.all_projectiles.add(Projectile(self))
 
     def move_right(self):
         self.rect.x += self.speed

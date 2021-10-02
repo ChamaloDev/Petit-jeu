@@ -1,16 +1,21 @@
 import pygame
 from game import Game
+from projectile import screen_x, screen_y
 pygame.init()
 
 # Génération de la fenêtre de jeu
 pygame.display.set_caption("La babale contre le reste du monde")
-screen = pygame.display.set_mode((1000, 1000))
+screen = pygame.display.set_mode((screen_x, screen_y))
 
 # Arrière plan
 background = pygame.image.load('images/Arriere_plan.png')
+background = pygame.transform.scale(background,(screen_x, screen_y))
 
 # Chargement du jeu
 game = Game()
+
+# Nombre de touches pressé en même temps
+nb_touches_pressées = 0
 
 running = True
 print("Lancement du jeu...")
@@ -24,15 +29,19 @@ while running:
     # Application du sprite du joueur
     screen.blit(game.player.image, game.player.rect)
     
+    #faire bouger les projectiles
+    for projectile in game.player.all_projectiles:
+        projectile.move()
+
     # Application de tous les projectiles
     game.player.all_projectiles.draw(screen)
 
     # Mouvements
-    if game.pressed.get(pygame.K_d) and game.player.rect.x+game.player.rect.width*game.player.size/game.player.rect.width<1000:
+    if game.pressed.get(pygame.K_d) and game.player.rect.x+game.player.rect.width*game.player.size/game.player.rect.width<screen_x:
         game.player.move_right()
     if game.pressed.get(pygame.K_q) and game.player.rect.x>0:
         game.player.move_left()
-    if game.pressed.get(pygame.K_s) and game.player.rect.y+game.player.rect.width*game.player.size/game.player.rect.width<1000:
+    if game.pressed.get(pygame.K_s) and game.player.rect.y+game.player.rect.width*game.player.size/game.player.rect.width<screen_y:
         game.player.move_down()
     if game.pressed.get(pygame.K_z) and game.player.rect.y>0:
         game.player.move_up()
@@ -55,7 +64,15 @@ while running:
 
             if event.key == pygame.K_SPACE:
                 game.player.launch_projectile()
+            else:
+                nb_touches_pressées += 1
 
         elif event.type == pygame.KEYUP:
             game.pressed[event.key] = False
-        
+            if event.key != pygame.K_SPACE:
+                nb_touches_pressées -= 1
+
+        if nb_touches_pressées >= 2:
+            game.player.speed = 2
+        else:
+            game.player.speed = 3
