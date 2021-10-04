@@ -33,6 +33,10 @@ while running:
     for projectile in game.player.all_projectiles:
         projectile.move()
 
+    # Faire bouger les ennemis
+    for ennemi in game.all_ennemis:
+        ennemi.forward()
+
     # Application de tous les projectiles
     game.player.all_projectiles.draw(screen)
 

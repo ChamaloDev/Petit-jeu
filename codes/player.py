@@ -5,8 +5,9 @@ from projectile import Projectile
 # Classe du joueur
 class Player(pygame.sprite.Sprite):
 
-    def __init__(self):
+    def __init__(self, game):
         super().__init__()
+        self.game = game
         self.health = 100
         self.max_health = 100
         self.speed = 2
@@ -23,13 +24,17 @@ class Player(pygame.sprite.Sprite):
         self.all_projectiles.add(Projectile(self))
 
     def move_right(self):
-        self.rect.x += self.speed
+        if not self.game.collisions(self, self.game.all_ennemis):
+            self.rect.x += self.speed
     
     def move_left(self):
-        self.rect.x -= self.speed
+        if not self.game.collisions(self, self.game.all_ennemis):
+            self.rect.x -= self.speed
     
     def move_down(self):
-        self.rect.y += self.speed
+        if not self.game.collisions(self, self.game.all_ennemis):
+            self.rect.y += self.speed
 
     def move_up(self):
-        self.rect.y -= self.speed
+        if not self.game.collisions(self, self.game.all_ennemis):
+            self.rect.y -= self.speed
