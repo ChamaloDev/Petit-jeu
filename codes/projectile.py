@@ -1,7 +1,5 @@
 import pygame
-
-# Taille de l'écran, j'en avais besoin ici
-screen_x, screen_y = 1600, 720
+import parametres as p
 
 # Classe du projectile
 class Projectile(pygame.sprite.Sprite):
@@ -11,7 +9,7 @@ class Projectile(pygame.sprite.Sprite):
         super().__init__()
         self.velocity = 2
         self.player = player
-        self.image = pygame.image.load('images/Projectile.png')
+        self.image = pygame.image.load('images\Projectile.png')
         self.size = 50
         self.image = pygame.transform.scale(self.image,(self.size,self.size))
         self.rect = self.image.get_rect()
@@ -33,7 +31,7 @@ class Projectile(pygame.sprite.Sprite):
         self.rotate()
 
         # Tuer le méchant projectile si il est partit trop loin
-        if self.rect.x > screen_x or self.rect.x < 0:
+        if self.rect.x > p.screen_x or self.rect.x < 0:
             self.remove()
-        elif self.rect.y > screen_y or self.rect.y < 0:
+        elif self.rect.y > p.screen_y or self.rect.y < 0:
             self.remove()

@@ -1,15 +1,15 @@
 import pygame
+import parametres as p
 from game import Game
-from projectile import screen_x, screen_y
 pygame.init()
 
 # Génération de la fenêtre de jeu
 pygame.display.set_caption("La babale contre le reste du monde")
-screen = pygame.display.set_mode((screen_x, screen_y))
+screen = pygame.display.set_mode((p.screen_x, p.screen_y))
 
 # Arrière plan
 background = pygame.image.load('images/Arriere_plan.png')
-background = pygame.transform.scale(background,(screen_x, screen_y))
+background = pygame.transform.scale(background,(p.screen_x, p.screen_y))
 
 # Chargement du jeu
 game = Game()
@@ -29,19 +29,22 @@ while running:
     # Application du sprite du joueur
     screen.blit(game.player.image, game.player.rect)
     
-    #faire bouger les projectiles
+    # Faire bouger les projectiles
     for projectile in game.player.all_projectiles:
         projectile.move()
 
     # Application de tous les projectiles
     game.player.all_projectiles.draw(screen)
 
+    # Application des ennemis, toujours aussi délicatement
+    game.all_ennemis.draw(screen)
+
     # Mouvements
-    if game.pressed.get(pygame.K_d) and game.player.rect.x+game.player.rect.width*game.player.size/game.player.rect.width<screen_x:
+    if game.pressed.get(pygame.K_d) and game.player.rect.x+game.player.rect.width*game.player.size/game.player.rect.width<p.screen_x:
         game.player.move_right()
     if game.pressed.get(pygame.K_q) and game.player.rect.x>0:
         game.player.move_left()
-    if game.pressed.get(pygame.K_s) and game.player.rect.y+game.player.rect.width*game.player.size/game.player.rect.width<screen_y:
+    if game.pressed.get(pygame.K_s) and game.player.rect.y+game.player.rect.width*game.player.size/game.player.rect.width<p.screen_y:
         game.player.move_down()
     if game.pressed.get(pygame.K_z) and game.player.rect.y>0:
         game.player.move_up()

@@ -1,4 +1,5 @@
 import pygame
+import parametres as p
 from projectile import Projectile
 
 # Classe du joueur
@@ -10,12 +11,12 @@ class Player(pygame.sprite.Sprite):
         self.max_health = 100
         self.speed = 2
         self.all_projectiles = pygame.sprite.Group()
-        self.image = pygame.image.load('images/Babale.png')
-        self.rect = self.image.get_rect()
-        self.rect.x = 0
-        self.rect.y = 0
+        self.image = pygame.image.load('images\Babale.png')
         self.size = 100
         self.image = self.image = pygame.transform.scale(self.image,(self.size,self.size))
+        self.rect = self.image.get_rect()
+        self.rect.x = p.screen_x/2 - self.size/2
+        self.rect.y = p.screen_y/2 - self.size/2
 
     def launch_projectile(self):
         # Créer une nouvelle instance de la classe projectile
