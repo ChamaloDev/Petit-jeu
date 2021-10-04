@@ -1,7 +1,7 @@
 import pygame
 
 # Taille de l'écran, j'en avais besoin ici
-screen_x, screen_y = 1500, 1000
+screen_x, screen_y = 1600, 720
 
 # Classe du projectile
 class Projectile(pygame.sprite.Sprite):
