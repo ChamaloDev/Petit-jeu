@@ -10,6 +10,7 @@ class Player(pygame.sprite.Sprite):
         self.game = game
         self.health = 100
         self.max_health = 100
+        self.atk = 0.1
         self.speed = 2
         self.all_projectiles = pygame.sprite.Group()
         self.image = pygame.image.load('images\Babale.png')

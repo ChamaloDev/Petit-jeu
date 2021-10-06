@@ -36,6 +36,7 @@ while running:
     # Faire bouger les ennemis
     for ennemi in game.all_ennemis:
         ennemi.forward()
+        ennemi.barre_de_vie(screen)
 
     # Application de tous les projectiles
     game.player.all_projectiles.draw(screen)

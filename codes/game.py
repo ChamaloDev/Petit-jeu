@@ -14,6 +14,7 @@ class Game:
         self.all_ennemis = pygame.sprite.Group()
         self.pressed = {}
         self.spawn_ennemi()
+        self.spawn_ennemi()
 
     def collisions(self, sprite, group):
         return pygame.sprite.spritecollide(sprite, group, False, pygame.sprite.collide_mask)
