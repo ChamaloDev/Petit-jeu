@@ -5,7 +5,7 @@ import parametres as p
 class Projectile(pygame.sprite.Sprite):
 
     # Définition du constructeur de la classe
-    def __init__(self, player):
+    def __init__(self, player, game):
         super().__init__()
         self.velocity = 2
         self.player = player
@@ -29,6 +29,11 @@ class Projectile(pygame.sprite.Sprite):
     def move(self):
         self.rect.x += self.velocity
         self.rotate()
+
+        # Verification pour savoir si le projectile à atteint sa cible
+        if self.player.game.collisions(self, self.player.game.all_ennemis):
+            #Suprimer le méchant projectile
+            self.remove()
 
         # Tuer le méchant projectile si il est partit trop loin
         if self.rect.x > p.screen_x or self.rect.x < 0:

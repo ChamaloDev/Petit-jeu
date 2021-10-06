@@ -19,22 +19,26 @@ class Player(pygame.sprite.Sprite):
         self.rect.x = p.screen_x/2 - self.size/2
         self.rect.y = p.screen_y/2 - self.size/2
 
-    def launch_projectile(self):
+    def launch_projectile(self, game):
         # Créer une nouvelle instance de la classe projectile
-        self.all_projectiles.add(Projectile(self))
+        self.all_projectiles.add(Projectile(self, game))
 
     def move_right(self):
-        if not self.game.collisions(self, self.game.all_ennemis):
-            self.rect.x += self.speed
-    
-    def move_left(self):
-        if not self.game.collisions(self, self.game.all_ennemis):
+        self.rect.x += self.speed
+        if self.game.collisions(self, self.game.all_ennemis):
             self.rect.x -= self.speed
     
+    def move_left(self):
+        self.rect.x -= self.speed
+        if self.game.collisions(self, self.game.all_ennemis):
+            self.rect.x += self.speed
+    
     def move_down(self):
-        if not self.game.collisions(self, self.game.all_ennemis):
-            self.rect.y += self.speed
+        self.rect.y += self.speed
+        if self.game.collisions(self, self.game.all_ennemis):
+            self.rect.y -= self.speed
 
     def move_up(self):
-        if not self.game.collisions(self, self.game.all_ennemis):
-            self.rect.y -= self.speed
+        self.rect.y -= self.speed
+        if self.game.collisions(self, self.game.all_ennemis):
+            self.rect.y += self.speed

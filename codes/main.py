@@ -70,7 +70,7 @@ while running:
             game.pressed[event.key] = True
 
             if event.key == pygame.K_SPACE:
-                game.player.launch_projectile()
+                game.player.launch_projectile(game)
             else:
                 nb_touches_pressées += 1
 
