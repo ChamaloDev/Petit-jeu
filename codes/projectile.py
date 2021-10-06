@@ -5,7 +5,7 @@ import parametres as p
 class Projectile(pygame.sprite.Sprite):
 
     # Définition du constructeur de la classe
-    def __init__(self, player, game):
+    def __init__(self, player):
         super().__init__()
         self.player = player
         self.velocity = 2
