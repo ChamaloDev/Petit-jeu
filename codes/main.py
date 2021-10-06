@@ -1,6 +1,7 @@
 import pygame
 import parametres as p
 from game import Game
+from math import sqrt
 pygame.init()
 
 # Génération de la fenêtre de jeu
@@ -22,6 +23,8 @@ print("Lancement du jeu...")
 
 # Boucle principale
 while running:
+    # Frame rate
+    p.clock.tick(p.frame_rate)
 
     # Application délicate et soignée de l'arrière plan
     screen.blit(background, (0, 0))
@@ -81,6 +84,6 @@ while running:
                 nb_touches_pressées -= 1
 
         if nb_touches_pressées >= 2:
-            game.player.speed = 2
+            game.player.speed = sqrt(p.speed)
         else:
-            game.player.speed = 3
+            game.player.speed = p.speed

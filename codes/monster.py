@@ -6,15 +6,15 @@ import parametres as p
 class Ennemi(pygame.sprite.Sprite):
 
     def stats(self):
-        self.max_pv = randrange(75, 125)
+        self.max_pv = randrange(50, 150)
         self.pv = self.max_pv
-        self.dommages = 10
-        self.size = 100
-        self.image = pygame.transform.scale(self.image,(self.size,self.size))
+        self.size = self.max_pv
+        self.dommages = randrange(1, 4)*self.size/100
+        self.image = pygame.transform.scale(self.original_image,(self.size,self.size))
         self.rect.x = p.screen_x
         self.rect.y = randrange(0-self.size, p.screen_y)
-        self.speed = randrange(25, 150)
-        self.speed2 = randrange(4, 40)
+        self.speed = randrange(2500, 15000)/self.size
+        self.speed2 = randrange(500, 3500)/self.size
         self.wait = 0
         self.wait2 = 0
         self.gauche = 1
@@ -24,6 +24,7 @@ class Ennemi(pygame.sprite.Sprite):
         super().__init__()
         self.game = game
         self.image = pygame.image.load('images\Mechant.png')
+        self.original_image = self.image
         self.rect = self.image.get_rect()
         self.stats()
 
@@ -36,7 +37,7 @@ class Ennemi(pygame.sprite.Sprite):
             self.stats()
         else:
             # Calcul du recul
-            self.rect.x += amount*randrange(50,200)/self.max_pv
+            self.rect.x += 100*amount/self.max_pv
 
     def barre_de_vie(self, surface):
         # Couleur bare de vie
