@@ -1,7 +1,6 @@
 import pygame
 import parametres as p
 from game import Game
-from math import sqrt
 pygame.init()
 
 # Génération de la fenêtre de jeu
@@ -34,7 +33,7 @@ while running:
     
     # Faire bouger les projectiles
     for projectile in game.player.all_projectiles:
-        projectile.move()
+        projectile.move(game.player)
 
     # Faire bouger les ennemis
     for ennemi in game.all_ennemis:
@@ -57,6 +56,11 @@ while running:
     if game.pressed.get(pygame.K_z) and game.player.rect.y>0:
         game.player.move_up()
 
+    # Esquive !
+    game.player.attack()
+    if game.player.cold_down == 1:
+        game.player.launch_projectile()
+
     # Misse à jour de l'écran
     pygame.display.flip()
 
@@ -75,15 +79,27 @@ while running:
 
             if event.key == pygame.K_SPACE:
                 game.player.launch_projectile()
+            elif event.key == pygame.K_LEFT:
+                if game.player.cold_down == 0:
+                    game.player.dash = "left"
+            elif event.key == pygame.K_RIGHT:
+                if game.player.cold_down == 0:
+                    game.player.dash = "right"
+            elif event.key == pygame.K_UP:
+                if game.player.cold_down == 0:
+                    game.player.dash = "up"
+            elif event.key == pygame.K_DOWN:
+                if game.player.cold_down == 0:
+                    game.player.dash = "down"
             else:
                 nb_touches_pressées += 1
 
         elif event.type == pygame.KEYUP:
             game.pressed[event.key] = False
-            if event.key != pygame.K_SPACE:
+            if event.key != pygame.K_SPACE and event.key != pygame.K_LEFT and event.key != pygame.K_RIGHT and event.key != pygame.K_UP and event.key != pygame.K_DOWN:
                 nb_touches_pressées -= 1
 
         if nb_touches_pressées >= 2:
-            game.player.speed = sqrt(p.speed)
+            game.player.speed = p.speed/1.3
         else:
             game.player.speed = p.speed
