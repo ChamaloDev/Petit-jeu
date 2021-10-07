@@ -28,7 +28,7 @@ class Ennemi(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.stats()
 
-    def damage(self, amount):
+    def damage(self, amount, dash):
         # Faire bobo au méchant
         self.pv -= amount
         # Le méchant est décédé ou pas
@@ -37,7 +37,16 @@ class Ennemi(pygame.sprite.Sprite):
             self.stats()
         else:
             # Calcul du recul
-            self.rect.x += 100*amount/self.max_pv
+            i = 10
+            while self.game.collisions(self, self.game.all_players):
+                x = randrange(-i,i)
+                y = randrange(-i,i)
+                self.rect.x += x
+                self.rect.y += y
+                print(x, y)
+                if self.game.collisions(self, self.game.all_players):
+                    self.rect.x -= x*2
+                    self.rect.y -= y*2
 
     def barre_de_vie(self, surface):
         # Couleur bare de vie
@@ -56,8 +65,8 @@ class Ennemi(pygame.sprite.Sprite):
         pygame.draw.rect(surface, noir, fond_pv)
         pygame.draw.rect(surface, couleur_pv, bar_position)
 
-    def forward(self):
-        if not self.game.collisions(self, self.game.all_players):
+    def forward(self, all_projectiles):
+        if not self.game.collisions(self, self.game.all_players) and not self.game.collisions(self, all_projectiles):
             while self.wait >= 100:
                 self.wait -= 250 - 150*(self.pv/self.max_pv)
                 if self.gauche == 1:
